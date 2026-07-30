@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/docs/">
+    <File Path="ARCHITECTURE.md" />
+    <File Path="IMPLEMENTATION_PLAN.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="AGENTS.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Chat.App/Chat.App.csproj" />
+  <Project Path="Chat.Application/Chat.Application.csproj" />
+  <Project Path="Chat.Bot/Chat.Bot.csproj" />
+  <Project Path="Chat.Domain/Chat.Domain.csproj" />
+  <Project Path="Chat.Infrastructure/Chat.Infrastructure.csproj" />
+  <Project Path="Chat.Tests/Chat.Tests.csproj" />
+</Solution>
