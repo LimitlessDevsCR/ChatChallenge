@@ -206,6 +206,58 @@ code {
   color: #0f5b4b;
 }
 
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 3.5rem 0;
+}
+
+.auth-panel {
+  background: #ffffff;
+  border: 1px solid #dfe4dd;
+  border-radius: 8px;
+  box-shadow: 0 20px 45px rgba(31, 38, 35, 0.08);
+  max-width: 460px;
+  padding: 2rem;
+  width: 100%;
+}
+
+.auth-panel h1 {
+  color: #14211d;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.auth-lede {
+  color: #5d6963;
+  font-size: 1rem;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.auth-form .form-control {
+  border-color: #d7ded5;
+}
+
+.auth-form .form-control:focus {
+  border-color: #0f5b4b;
+}
+
+.auth-switch {
+  color: #5d6963;
+  margin: 0;
+  text-align: center;
+}
+
+.auth-switch a {
+  font-weight: 700;
+}
+
 @media (max-width: 900px) {
   .hero-shell,
   .feature-grid {
@@ -219,6 +271,10 @@ code {
   .next-step-band {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .auth-page {
+    padding: 2rem 0;
   }
 }
 
