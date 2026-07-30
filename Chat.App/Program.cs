@@ -1,5 +1,9 @@
+using Chat.Application.Interfaces;
+using Chat.Application.Services;
+using Chat.App.Hubs;
 using Chat.Infrastructure.Identity;
 using Chat.Infrastructure.Persistence;
+using Chat.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +24,9 @@ builder.Services
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -44,5 +51,6 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

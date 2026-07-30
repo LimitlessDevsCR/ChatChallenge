@@ -1,0 +1,45 @@
+@model ChatIndexViewModel
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<section class="chat-shell" data-initial-room="@Model.CurrentRoomId">
+    <aside class="chat-room-list" aria-label="Chat rooms">
+        <p class="eyebrow">Rooms</p>
+        <div class="room-buttons">
+            @foreach (var room in Model.Rooms)
+            {
+                <button
+                    type="button"
+                    class="room-button @(room.Id == Model.CurrentRoomId ? "active" : "")"
+                    data-room-id="@room.Id">
+                    @room.Name
+                </button>
+            }
+        </div>
+    </aside>
+
+    <section class="chat-panel" aria-label="Chat conversation">
+        <header class="chat-panel-header">
+            <div>
+                <p class="eyebrow">MarketChat</p>
+                <h1 id="current-room-title">@Model.Rooms.First(room => room.Id == Model.CurrentRoomId).Name</h1>
+            </div>
+            <span id="connection-status" class="connection-status">Connecting</span>
+        </header>
+
+        <div id="messages-list" class="messages-list" aria-live="polite"></div>
+
+        <form id="message-form" class="message-form">
+            <label class="visually-hidden" for="message-input">Message</label>
+            <textarea id="message-input" maxlength="500" rows="2" placeholder="Write a message"></textarea>
+            <button id="send-button" type="submit" class="btn btn-primary">Send</button>
+        </form>
+        <p id="chat-error" class="chat-error" role="alert"></p>
+    </section>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+}

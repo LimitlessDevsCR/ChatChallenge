@@ -10,16 +10,19 @@
 - Initial migration
 - Local database creation
 
-## Phase 2 - Next
+## Phase 2 - Completed
 
 - MVC
 - Authentication
 - SignalR
+- Authenticated chat page
+- Chat rooms
 
-## Phase 3 - Pending
+## Phase 3 - Completed
 
 - Message persistence
 - Last 50 messages
+- Room-specific message history
 
 ## Phase 4 - Pending
 
