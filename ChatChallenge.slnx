@@ -1,10 +1,9 @@
 <Solution>
-  <Folder Name="/docs/">
-    <File Path="ARCHITECTURE.md" />
-    <File Path="IMPLEMENTATION_PLAN.md" />
-  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="AGENTS.md" />
+    <File Path="docs/ARCHITECTURE.md" />
+    <File Path="docs/IMPLEMENTATION_PLAN.md" />
+    <File Path="docs/spec/net-challenge-financial-chat.pdf" />
     <File Path="README.md" />
   </Folder>
   <Project Path="Chat.App/Chat.App.csproj" />
