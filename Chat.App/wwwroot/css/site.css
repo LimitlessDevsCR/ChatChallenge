@@ -18,7 +18,264 @@ html {
 }
 
 body {
+  background: #f7f8f5;
+  color: #1f2623;
   margin-bottom: 60px;
+}
+
+.app-nav {
+  background: #ffffff;
+  border-bottom: 1px solid #dfe4dd;
+  box-shadow: 0 10px 28px rgba(31, 38, 35, 0.06);
+  margin-bottom: 0;
+}
+
+.app-brand {
+  align-items: center;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.65rem;
+  letter-spacing: 0;
+}
+
+.brand-mark {
+  align-items: center;
+  background: #17352f;
+  border-radius: 6px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 0.82rem;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.app-nav .nav-link {
+  color: #39443f;
+  font-weight: 500;
+}
+
+.app-nav .nav-link:hover,
+.app-nav .nav-link:focus {
+  color: #0f5b4b;
+}
+
+.hero-shell {
+  align-items: stretch;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+  padding: 5rem 0 3rem;
+}
+
+.hero-copy {
+  max-width: 760px;
+}
+
+.eyebrow {
+  color: #0f5b4b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.hero-copy h1 {
+  color: #14211d;
+  font-size: clamp(2.6rem, 6vw, 5.6rem);
+  font-weight: 800;
+  line-height: 0.98;
+  margin: 0;
+  max-width: 720px;
+}
+
+.hero-lede {
+  color: #4b5852;
+  font-size: 1.18rem;
+  line-height: 1.65;
+  margin: 1.5rem 0 0;
+  max-width: 650px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.btn-primary {
+  background-color: #17352f;
+  border-color: #17352f;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #0f5b4b;
+  border-color: #0f5b4b;
+}
+
+.status-panel {
+  align-self: center;
+  background: #ffffff;
+  border: 1px solid #dfe4dd;
+  border-radius: 8px;
+  box-shadow: 0 24px 50px rgba(31, 38, 35, 0.08);
+  padding: 1rem;
+}
+
+.status-row {
+  align-items: center;
+  border-bottom: 1px solid #edf0eb;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.95rem 0.35rem;
+}
+
+.status-row:last-child {
+  border-bottom: 0;
+}
+
+.status-row span {
+  color: #5d6963;
+}
+
+.status-row strong {
+  color: #14211d;
+}
+
+.feature-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-bottom: 2rem;
+}
+
+.feature-item {
+  background: #ffffff;
+  border: 1px solid #dfe4dd;
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.feature-kicker {
+  color: #8a6f25;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.feature-item h2 {
+  color: #14211d;
+  font-size: 1.05rem;
+  margin: 0.65rem 0;
+}
+
+.feature-item p {
+  color: #5d6963;
+  margin: 0;
+}
+
+.next-step-band {
+  align-items: center;
+  background: #17352f;
+  border-radius: 8px;
+  color: #ffffff;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding: 1rem 1.25rem;
+}
+
+.next-step-band span {
+  color: #b9d5cd;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.next-step-band strong {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+code {
+  color: #0f5b4b;
+}
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 3.5rem 0;
+}
+
+.auth-panel {
+  background: #ffffff;
+  border: 1px solid #dfe4dd;
+  border-radius: 8px;
+  box-shadow: 0 20px 45px rgba(31, 38, 35, 0.08);
+  max-width: 460px;
+  padding: 2rem;
+  width: 100%;
+}
+
+.auth-panel h1 {
+  color: #14211d;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.auth-lede {
+  color: #5d6963;
+  font-size: 1rem;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.auth-form .form-control {
+  border-color: #d7ded5;
+}
+
+.auth-form .form-control:focus {
+  border-color: #0f5b4b;
+}
+
+.auth-switch {
+  color: #5d6963;
+  margin: 0;
+  text-align: center;
+}
+
+.auth-switch a {
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .hero-shell,
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-shell {
+    padding-top: 3rem;
+  }
+
+  .next-step-band {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .auth-page {
+    padding: 2rem 0;
+  }
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

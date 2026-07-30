@@ -1,8 +1,59 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "MarketChat";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<section class="hero-shell">
+    <div class="hero-copy">
+        <p class="eyebrow">Financial chat challenge</p>
+        <h1>Welcome to MarketChat</h1>
+        <p class="hero-lede">
+            A focused chatroom for registered users, built to support real-time
+            conversations and stock quote commands through a decoupled bot.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register">Create account</a>
+            <a class="btn btn-outline-dark btn-lg" asp-area="Identity" asp-page="/Account/Login">Log in</a>
+        </div>
+    </div>
+    <div class="status-panel" aria-label="Implementation focus">
+        <div class="status-row">
+            <span>Identity</span>
+            <strong>Ready</strong>
+        </div>
+        <div class="status-row">
+            <span>SQLite persistence</span>
+            <strong>Ready</strong>
+        </div>
+        <div class="status-row">
+            <span>Chat rooms</span>
+            <strong>Planned</strong>
+        </div>
+        <div class="status-row">
+            <span>Stock bot</span>
+            <strong>Planned</strong>
+        </div>
+    </div>
+</section>
+
+<section class="feature-grid" aria-label="Application capabilities">
+    <article class="feature-item">
+        <span class="feature-kicker">01</span>
+        <h2>Registered conversations</h2>
+        <p>Users authenticate before joining the shared chat experience.</p>
+    </article>
+    <article class="feature-item">
+        <span class="feature-kicker">02</span>
+        <h2>Market commands</h2>
+        <p>Messages like <code>/stock=aapl.us</code> will route to the stock bot instead of being saved as posts.</p>
+    </article>
+    <article class="feature-item">
+        <span class="feature-kicker">03</span>
+        <h2>Room-ready storage</h2>
+        <p>Messages include a room identifier so the bonus multi-room flow can be added cleanly.</p>
+    </article>
+</section>
+
+<div class="next-step-band">
+    <span>Next implementation step</span>
+    <strong>Build the authenticated chatroom and persist the last 50 messages.</strong>
 </div>
