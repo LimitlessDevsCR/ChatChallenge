@@ -159,6 +159,14 @@ Run the unit tests with:
 dotnet test Chat.Tests/Chat.Tests.csproj
 ```
 
+## Security Notes
+
+- Local SQLite database files are ignored by Git (`*.db`, `*.db-shm`, `*.db-wal`).
+- Visual Studio and build artifacts are ignored (`.vs`, `bin`, `obj`, `*.user`).
+- `appsettings.Development.json` is committed only with local development defaults and does not contain secrets.
+- RabbitMQ uses the default `guest` / `guest` credentials only for the local Docker Compose setup.
+- No API keys, access tokens, or production secrets are required for this challenge.
+
 ## Stock Quote Endpoint
 
 The challenge specification points to Stooq's quote CSV endpoint:
