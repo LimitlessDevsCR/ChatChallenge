@@ -2,6 +2,7 @@ using Chat.Application.Interfaces;
 using Chat.Application.Services;
 using Chat.Application.DTOs;
 using Chat.Domain.Entities;
+using Chat.Infrastructure.StockApi;
 
 namespace Chat.Tests
 {
@@ -108,6 +109,62 @@ namespace Chat.Tests
             Assert.Equal("user-1", request.RequestedByUserId);
             Assert.Equal("Test User", request.RequestedByUserName);
             Assert.Equal(DateTimeKind.Utc, request.RequestedAtUtc.Kind);
+        }
+
+        [Fact]
+        public async Task SendBotMessageAsync_SavesBotMessage()
+        {
+            var repository = new FakeMessageRepository();
+            var service = new ChatService(repository, new FakeStockQuoteRequestPublisher());
+
+            var message = await service.SendBotMessageAsync("general", "AAPL.US quote is $93.42 per share");
+
+            Assert.Equal("general", message.ChatRoomId);
+            Assert.Equal("stock-bot", message.UserId);
+            Assert.Equal("Stock Bot", message.UserName);
+            Assert.Equal("AAPL.US quote is $93.42 per share", message.Content);
+            Assert.True(message.IsBotMessage);
+            Assert.Single(repository.Messages);
+        }
+
+        [Fact]
+        public void ParseQuote_ReturnsSymbolAndClosePrice()
+        {
+            const string csv = """
+                Date,Open,High,Low,Close,Volume
+                2026-07-30,213.9,215.2,212.4,214.55,123456
+                """;
+
+            var quote = StooqStockQuoteService.ParseQuote(csv, "aapl.us");
+
+            Assert.Equal("AAPL.US", quote.Symbol);
+            Assert.Equal(214.55m, quote.ClosePrice);
+        }
+
+        [Fact]
+        public void ParseQuote_RejectsMissingQuote()
+        {
+            const string csv = """
+                Date,Open,High,Low,Close,Volume
+                N/D,N/D,N/D,N/D,N/D,N/D
+                """;
+
+            Assert.Throws<InvalidOperationException>(() =>
+                StooqStockQuoteService.ParseQuote(csv, "aapl.us"));
+        }
+
+        [Fact]
+        public void ParseQuote_ReturnsClosePriceFromAssignmentCsvShape()
+        {
+            const string csv = """
+                Symbol,Date,Time,Open,High,Low,Close,Volume
+                AAPL.US,2026-07-31,22:00:08,213.9,215.2,212.4,214.55,123456
+                """;
+
+            var quote = StooqStockQuoteService.ParseQuote(csv, "aapl.us");
+
+            Assert.Equal("AAPL.US", quote.Symbol);
+            Assert.Equal(214.55m, quote.ClosePrice);
         }
 
         private sealed class FakeMessageRepository : IMessageRepository

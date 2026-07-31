@@ -13,5 +13,7 @@ namespace Chat.Infrastructure.Messaging
         public string Password { get; set; } = "guest";
 
         public string StockRequestQueue { get; set; } = "stock-quote-requests";
+
+        public string StockResponseQueue { get; set; } = "stock-quote-responses";
     }
 }

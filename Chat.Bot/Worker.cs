@@ -5,6 +5,7 @@ namespace Chat.Bot
 
     public class Worker(
         IStockQuoteRequestConsumer stockQuoteRequestConsumer,
+        IServiceScopeFactory scopeFactory,
         ILogger<Worker> logger) : BackgroundService
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -34,7 +35,7 @@ namespace Chat.Bot
             }
         }
 
-        private Task HandleStockQuoteRequestAsync(
+        private async Task HandleStockQuoteRequestAsync(
             StockQuoteRequestDto request,
             CancellationToken cancellationToken)
         {
@@ -44,7 +45,44 @@ namespace Chat.Bot
                 request.ChatRoomId,
                 request.RequestedByUserName);
 
-            return Task.CompletedTask;
+            var response = await CreateResponseAsync(request, cancellationToken);
+            using var scope = scopeFactory.CreateScope();
+            var stockQuoteResponsePublisher = scope.ServiceProvider.GetRequiredService<IStockQuoteResponsePublisher>();
+
+            await stockQuoteResponsePublisher.PublishAsync(response, cancellationToken);
+        }
+
+        private async Task<StockQuoteResponseDto> CreateResponseAsync(
+            StockQuoteRequestDto request,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                using var scope = scopeFactory.CreateScope();
+                var stockQuoteService = scope.ServiceProvider.GetRequiredService<IStockQuoteService>();
+                var quote = await stockQuoteService.GetQuoteAsync(request.StockCode, cancellationToken);
+
+                return new StockQuoteResponseDto(
+                    request.ChatRoomId,
+                    request.StockCode,
+                    $"{quote.Symbol} quote is ${quote.ClosePrice:0.##} per share",
+                    true,
+                    DateTime.UtcNow);
+            }
+            catch (Exception exception)
+            {
+                logger.LogWarning(
+                    exception,
+                    "Failed to get stock quote for {StockCode}.",
+                    request.StockCode);
+
+                return new StockQuoteResponseDto(
+                    request.ChatRoomId,
+                    request.StockCode,
+                    $"Stock quote for {request.StockCode.ToUpperInvariant()} is not available.",
+                    false,
+                    DateTime.UtcNow);
+            }
         }
     }
 }

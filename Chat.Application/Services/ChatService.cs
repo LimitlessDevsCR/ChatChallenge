@@ -9,6 +9,8 @@ namespace Chat.Application.Services
         private const int MaxMessageLength = 500;
         private const int MaxMessagesToLoad = 50;
         private const string StockCommandPrefix = "/stock=";
+        private const string BotUserId = "stock-bot";
+        private const string BotUserName = "Stock Bot";
 
         private static readonly IReadOnlyList<ChatRoomDto> Rooms =
         [
@@ -120,6 +122,29 @@ namespace Chat.Application.Services
                 normalizedUserName,
                 normalizedContent,
                 cancellationToken);
+        }
+
+        public async Task<ChatMessageDto> SendBotMessageAsync(
+            string chatRoomId,
+            string content,
+            CancellationToken cancellationToken = default)
+        {
+            var normalizedRoomId = NormalizeRoomId(chatRoomId);
+            var normalizedContent = NormalizeContent(content);
+
+            var message = new Message
+            {
+                ChatRoomId = normalizedRoomId,
+                UserId = BotUserId,
+                UserName = BotUserName,
+                Content = normalizedContent,
+                CreatedAtUtc = DateTime.UtcNow,
+                IsBotMessage = true
+            };
+
+            var savedMessage = await _messageRepository.AddAsync(message, cancellationToken);
+
+            return ToDto(savedMessage);
         }
 
         private static string NormalizeRoomId(string chatRoomId)

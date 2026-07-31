@@ -55,6 +55,26 @@ Stop RabbitMQ with:
 docker compose down
 ```
 
+## Stock Quote Endpoint
+
+The challenge specification points to Stooq's quote CSV endpoint:
+
+```text
+https://stooq.com/q/l/?s=aapl.us&f=sd2t2ohlcv&h&e=csv
+```
+
+During implementation, that endpoint returned `404 Not Found`, so the stock bot
+uses Stooq's historical CSV download endpoint instead:
+
+```text
+https://stooq.com/q/d/l/?s=aapl.us&i=d
+```
+
+This endpoint returns CSV in a browser and provides the latest available close
+price from the historical data. Stooq may still return a JavaScript verification
+page to server-side clients such as `curl` or `HttpClient`; when that happens,
+the bot handles the failure and posts that the quote is not available.
+
 ## Solution Structure
 
 Chat.App

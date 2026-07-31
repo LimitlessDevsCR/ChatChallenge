@@ -24,5 +24,10 @@ namespace Chat.Application.Interfaces
             string userName,
             string content,
             CancellationToken cancellationToken = default);
+
+        Task<ChatMessageDto> SendBotMessageAsync(
+            string chatRoomId,
+            string content,
+            CancellationToken cancellationToken = default);
     }
 }
