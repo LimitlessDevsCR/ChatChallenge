@@ -8,6 +8,7 @@ namespace Chat.Application.Services
     {
         private const int MaxMessageLength = 500;
         private const int MaxMessagesToLoad = 50;
+        private const string StockCommandPrefix = "/stock=";
 
         private static readonly IReadOnlyList<ChatRoomDto> Rooms =
         [
@@ -17,10 +18,14 @@ namespace Chat.Application.Services
         ];
 
         private readonly IMessageRepository _messageRepository;
+        private readonly IStockQuoteRequestPublisher _stockQuoteRequestPublisher;
 
-        public ChatService(IMessageRepository messageRepository)
+        public ChatService(
+            IMessageRepository messageRepository,
+            IStockQuoteRequestPublisher stockQuoteRequestPublisher)
         {
             _messageRepository = messageRepository;
+            _stockQuoteRequestPublisher = stockQuoteRequestPublisher;
         }
 
         public IReadOnlyList<ChatRoomDto> GetRooms()
@@ -79,6 +84,44 @@ namespace Chat.Application.Services
             return ToDto(savedMessage);
         }
 
+        public async Task<ChatMessageDto?> SendUserInputAsync(
+            string chatRoomId,
+            string userId,
+            string userName,
+            string content,
+            CancellationToken cancellationToken = default)
+        {
+            var normalizedRoomId = NormalizeRoomId(chatRoomId);
+            var normalizedContent = NormalizeContent(content);
+            var normalizedUserName = NormalizeUserName(userName);
+
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                throw new ArgumentException("User id is required.", nameof(userId));
+            }
+
+            if (TryParseStockCommand(normalizedContent, out var stockCode))
+            {
+                await _stockQuoteRequestPublisher.PublishAsync(
+                    new StockQuoteRequestDto(
+                        normalizedRoomId,
+                        stockCode,
+                        userId,
+                        normalizedUserName,
+                        DateTime.UtcNow),
+                    cancellationToken);
+
+                return null;
+            }
+
+            return await SendMessageAsync(
+                normalizedRoomId,
+                userId,
+                normalizedUserName,
+                normalizedContent,
+                cancellationToken);
+        }
+
         private static string NormalizeRoomId(string chatRoomId)
         {
             var normalizedRoomId = string.IsNullOrWhiteSpace(chatRoomId)
@@ -108,6 +151,35 @@ namespace Chat.Application.Services
             }
 
             return normalizedContent;
+        }
+
+        private static string NormalizeUserName(string userName)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                throw new ArgumentException("User name is required.", nameof(userName));
+            }
+
+            return userName.Trim();
+        }
+
+        private static bool TryParseStockCommand(string content, out string stockCode)
+        {
+            stockCode = string.Empty;
+
+            if (!content.StartsWith(StockCommandPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            stockCode = content[StockCommandPrefix.Length..].Trim().ToLowerInvariant();
+
+            if (string.IsNullOrWhiteSpace(stockCode))
+            {
+                throw new ArgumentException("Stock code is required.", nameof(content));
+            }
+
+            return true;
         }
 
         private static ChatMessageDto ToDto(Message message)

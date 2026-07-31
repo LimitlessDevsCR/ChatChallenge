@@ -24,10 +24,12 @@
 - Last 50 messages
 - Room-specific message history
 
-## Phase 4 - Pending
+## Phase 4 - In Progress
 
 - RabbitMQ
 - Worker Service
+- Stock request queue
+- App-to-Bot stock command publishing
 
 ## Phase 5 - Pending
 

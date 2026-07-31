@@ -30,6 +30,31 @@ than a verified implementation status.
 
 The original assignment is available at `docs/spec/net-challenge-financial-chat.pdf`.
 
+## Local RabbitMQ
+
+RabbitMQ is required for the stock quote bot flow.
+
+Prerequisite: Docker Desktop must be installed and running.
+
+Start RabbitMQ with Docker Compose:
+
+```powershell
+docker compose up -d
+```
+
+RabbitMQ will be available at:
+
+- Broker: `localhost:5672`
+- Management UI: `http://localhost:15672`
+- Username: `guest`
+- Password: `guest`
+
+Stop RabbitMQ with:
+
+```powershell
+docker compose down
+```
+
 ## Solution Structure
 
 Chat.App
@@ -41,7 +66,7 @@ Chat.Tests
 
 ## Intended Run Flow
 
-1. Start RabbitMQ.
+1. Start RabbitMQ with `docker compose up -d`.
 2. Run Chat.Bot.
 3. Run Chat.App.
 4. Open two browser windows.
