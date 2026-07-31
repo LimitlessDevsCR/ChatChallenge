@@ -13,7 +13,7 @@ Technical challenge implementing a browser-based chat application using .NET.
 - RabbitMQ
 - xUnit
 
-## Target Features
+## Completed Features
 
 - User registration and authentication
 - Real-time chat using SignalR
@@ -22,9 +22,13 @@ Technical challenge implementing a browser-based chat application using .NET.
 - SQLite persistence
 - Unit tests
 
-These are the intended final features for the challenge implementation. Until the
-application is complete, this list should be treated as the target scope rather
-than a verified implementation status.
+## Completed Bonus Features
+
+- Multiple chatrooms
+- ASP.NET Core Identity authentication
+- Bot exception handling
+
+The installer bonus was not implemented.
 
 ## Challenge Specification
 
@@ -74,6 +78,10 @@ This endpoint returns CSV in a browser and provides the latest available close
 price from the historical data. Stooq may still return a JavaScript verification
 page to server-side clients such as `curl` or `HttpClient`; when that happens,
 the bot handles the failure and posts that the quote is not available.
+
+The CSV parser is implemented and covered by unit tests for both the challenge
+CSV shape and the historical CSV shape. The remaining limitation is external to
+the application: Stooq may refuse to return CSV to non-browser clients.
 
 ## Solution Structure
 
