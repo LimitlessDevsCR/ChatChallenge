@@ -42,6 +42,7 @@ namespace Chat.Infrastructure.StockApi
             var headers = lines[0].Split(',', StringSplitOptions.TrimEntries);
             var values = lines[^1].Split(',', StringSplitOptions.TrimEntries);
 
+            // Supports both the challenge quote CSV shape and Stooq's historical CSV download shape.
             if (headers.Length != values.Length)
             {
                 throw new InvalidOperationException($"Stock quote for {requestedStockCode} was not in the expected format.");
