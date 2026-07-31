@@ -1,6 +1,8 @@
 using Chat.Application.Interfaces;
 using Chat.Application.Services;
 using Chat.App.Hubs;
+using Chat.App.Services;
+using Chat.Infrastructure;
 using Chat.Infrastructure.Identity;
 using Chat.Infrastructure.Persistence;
 using Chat.Infrastructure.Persistence.Repositories;
@@ -26,6 +28,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddRabbitMqMessaging(builder.Configuration);
+builder.Services.AddHostedService<StockQuoteResponseHostedService>();
 builder.Services.AddSignalR();
 
 var app = builder.Build();

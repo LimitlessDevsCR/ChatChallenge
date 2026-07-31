@@ -24,15 +24,21 @@
 - Last 50 messages
 - Room-specific message history
 
-## Phase 4 - Pending
+## Phase 4 - Completed
 
 - RabbitMQ
 - Worker Service
+- Stock request queue
+- App-to-Bot stock command publishing
+- Bot-to-App stock response queue
+- Bot response persistence and SignalR broadcast
 
-## Phase 5 - Pending
+## Phase 5 - In Progress
 
 - Stock API
 - CSV parsing
+- Stooq client
+- Bot error response handling
 
 ## Phase 6 - Pending
 

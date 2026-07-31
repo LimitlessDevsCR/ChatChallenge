@@ -33,19 +33,26 @@ namespace Chat.App.Hubs
         {
             try
             {
-                var message = await _chatService.SendMessageAsync(
+                var message = await _chatService.SendUserInputAsync(
                     roomId,
                     GetCurrentUserId(),
                     GetCurrentUserName(),
                     content,
                     Context.ConnectionAborted);
 
-                await Clients.Group(message.ChatRoomId).SendAsync(
-                    "ReceiveMessage",
-                    message,
-                    Context.ConnectionAborted);
+                if (message is not null)
+                {
+                    await Clients.Group(message.ChatRoomId).SendAsync(
+                        "ReceiveMessage",
+                        message,
+                        Context.ConnectionAborted);
+                }
             }
             catch (ArgumentException exception)
+            {
+                throw new HubException(exception.Message);
+            }
+            catch (InvalidOperationException exception)
             {
                 throw new HubException(exception.Message);
             }
